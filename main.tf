@@ -50,5 +50,15 @@ resource "aws_autoscaling_group" "asg" {
     id      = aws_launch_template.template.id
     version = "$Latest"
   }
+
+  dynamic "tag" {
+    for_each = var.tags
+    content {
+      key                 = tag.key
+      propagate_at_launch = true
+      value               = tag.value
+    }
+  }
+
 }
 
